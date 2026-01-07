@@ -133,7 +133,7 @@ export function findVehicleTypeInTextAndSubject(
   // Явные метки
   const labelPatterns: RegExp[] = [
     /Vehicle required[:\s-]*([A-Za-z0-9 \-]+)/i,
-    /Load Type[:\s-]*([A-Za-z0-9 \-]+)/i,
+    /Types Type[:\s-]*([A-Za-z0-9 \-]+)/i,
     /Type[:\s-]*([A-Za-z0-9 \-]+)/i,
     /Vehicle[:\s-]*([A-Za-z0-9 \-]+)/i,
   ];

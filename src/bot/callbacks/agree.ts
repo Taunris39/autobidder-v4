@@ -1,3 +1,5 @@
+// === src/bot/callbacks/agree.ts
+
 import type { Bot } from "grammy";
 import { setUserState, setUserData } from "../state.js";
 

@@ -1,6 +1,4 @@
 // === src/bot/handlers/textRegistration.ts ===
-// — Handles text messages during registration flow.
-// — States: awaiting_name -> awaiting_unit
 
 import type { Bot } from "grammy";
 import {

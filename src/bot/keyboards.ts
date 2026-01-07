@@ -21,5 +21,18 @@ export const statusKeyboard = new InlineKeyboard()
 // — Simple back button
 export const backToMenuKeyboard = new InlineKeyboard().text(
   "Back",
-  "main_menu"
+  "main_menu",
 );
+
+export function buildRateKeyboard(suggestedRate: number) {
+  const low = suggestedRate - 50;
+  const mid = suggestedRate;
+  const high = suggestedRate + 50;
+
+  return new InlineKeyboard()
+    .text(`$${low}`, `rate_${low}`)
+    .text(`$${mid}`, `rate_${mid}`)
+    .text(`$${high}`, `rate_${high}`)
+    .row()
+    .text("Ввести вручную", "rate_manual");
+}

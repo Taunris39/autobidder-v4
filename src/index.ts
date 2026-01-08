@@ -11,5 +11,7 @@ if (!token) {
 const bot = new Bot(token);
 
 initBot(bot);
+console.log("Bot initialized");
 
 bot.start();
+bot.catch((err) => { console.error("Bot error:", err); });

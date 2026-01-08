@@ -1,6 +1,6 @@
 // src/services/loadService.ts
 
-import { Load } from "../types.js";
+import type { Load } from "../types/types.js";
 
 const loads = new Map<string, Load>();
 

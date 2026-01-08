@@ -24,12 +24,11 @@ const ALLOWED_VEHICLE_TYPES = (env.ALLOWED_VEHICLE_TYPES ?? "Large Straight,Carg
  * - формирует Markdown‑сообщение и отправляет боту
  */
 export async function handleParsedEmail(
-  mailboxId: string,
   messageId: string,
   email: ParsedEmail
 ) {
   try {
-    // в начале handleParsedEmail, перед extractload
+    // в начале handleParsedEmail, перед extractLoad
     console.log(`[DEBUG] message=${messageId} headers:`, {
       subject: email.subject ?? null,
       from: email.from ?? null,
@@ -48,13 +47,6 @@ export async function handleParsedEmail(
       dumpSkipped(messageId, email);
       return;
     }
-
-    // Собираем тело письма: используем текст если есть, иначе короткий набор полей
-    const rawText = (email.text ?? "").trim();
-    const preview =
-      rawText.length > 1200
-        ? rawText.slice(0, 1200) + "…"
-        : rawText || "Текст письма отсутствует";
 
     // формирование Markdown‑сообщения (без orderId, без Posted, без превью)
     const md =

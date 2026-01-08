@@ -1,4 +1,4 @@
-// src/types.ts
+// src/types/types.ts
 
 export interface Quote {
   driverId: number;
@@ -7,7 +7,7 @@ export interface Quote {
 
 export type LoadStatus = "new" | "sent" | "quoted" | "assigned" | "expired";
 
-export interface Types {
+export interface Load {
   id: string;
   rawText: string;
   pickup: any;

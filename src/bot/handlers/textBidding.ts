@@ -12,7 +12,6 @@ export function registerTextBidding(bot: Bot) {
     const userData = getUserData(userId);
     if (!userData) return;
 
-    // Обрабатываем только если пользователь вводит кастомную ставку
     if (userData.state !== "awaiting_custom_rate") return;
 
     const loadId = userData.currentLoadId;
@@ -27,17 +26,18 @@ export function registerTextBidding(bot: Bot) {
       return;
     }
 
-    const price = Number(ctx.message.text);
+    const text = ctx.message?.text;
+    if (!text) return;
+
+    const price = Number(text);
     if (isNaN(price)) {
       await ctx.reply("Введите число.");
       return;
     }
 
-    // Добавляем ставку
     load.quotes.push({ driverId: userId, price });
     saveLoad(load);
 
-    // Сбрасываем состояние
     setUserData(userId, { state: "idle" });
 
     await ctx.reply(`Ставка $${price} отправлена.`);

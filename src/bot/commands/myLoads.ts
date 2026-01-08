@@ -2,6 +2,7 @@
 
 import { Bot, Context } from "grammy";
 import { getAllLoads } from "../../services/loadService.js";
+import type { Quote } from "../../types/types.js";
 
 export function registerMyLoads(bot: Bot) {
   bot.command("my_loads", async (ctx: Context) => {
@@ -9,7 +10,7 @@ export function registerMyLoads(bot: Bot) {
     if (!userId) return;
 
     const loads = getAllLoads().filter((l) =>
-      l.quotes.some((q) => q.driverId === userId),
+        l.quotes.some((q: Quote) => q.driverId === userId)
     );
 
     if (loads.length === 0) {
@@ -18,11 +19,13 @@ export function registerMyLoads(bot: Bot) {
     }
 
     const text = loads
-      .map((l) => {
-        const quote = l.quotes.find((q) => q.driverId === userId);
-        return `• ${l.id} — ваша ставка: $${quote?.price ?? "?"}`;
-      })
-      .join("\n");
+        .map((l) => {
+          const quote = l.quotes.find(
+              (q: Quote) => q.driverId === userId
+          );
+          return `• ${l.id} — ваша ставка: $${quote?.price ?? "?"}`;
+        })
+        .join("\n");
 
     await ctx.reply(text);
   });

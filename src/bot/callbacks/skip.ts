@@ -14,9 +14,8 @@ export function registerSkipCallback(bot: Bot) {
       return;
     }
 
-    // Сбрасываем активный груз и состояние
+    // Сбрасываем состояние, currentLoadId просто не трогаем
     setUserData(userId, {
-      currentLoadId: undefined,
       state: "idle",
     });
 

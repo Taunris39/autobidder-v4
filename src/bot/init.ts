@@ -14,58 +14,69 @@ if (!BOT_TOKEN) {
 export const bot = new Bot(BOT_TOKEN);
 
 // === Register functions (no side-effect imports) ===
-import { registerStart } from "./commands/start.js";
-import { registerMenu } from "./commands/menu.js";
-import { registerAdminLoads } from "./commands/adminLoads.js";
-import { registerAdminLoadDetails } from "./commands/adminLoadDetails.js";
-import { registerAdminDrivers } from "./commands/adminDrivers.js";
-import { registerProfileCommand } from "./commands/profile.js";
-import { registerStatusCommand } from "./commands/status.js";
-import { registerLocationCommand } from "./commands/location.js";
-import { registerMyLoadsCommand } from "./commands/myLoads.js";
 
-import { registerGetStarted } from "./callbacks/getStarted.js";
+
+// === Callbacks ===
 import { registerAgree } from "./callbacks/agree.js";
-import { registerSetLocation } from "./callbacks/setLocation.js";
-import { registerSetStatus } from "./callbacks/setStatus.js";
-import { registerStatusAvailable } from "./callbacks/statusAvailable.js";
-import { registerStatusBusy } from "./callbacks/statusBusy.js";
+import { registerGetStarted } from "./callbacks/getStarted.js";
 import { registerHelp } from "./callbacks/help.js";
 import { registerLoads } from "./callbacks/loads.js";
 import { registerMainMenu } from "./callbacks/mainMenu.js";
-import { registerRateCallbacks } from "./callbacks/rate.js";
+import { registerRateCallback } from "./callbacks/rate.js";
+import { registerSetLocation } from "./callbacks/setLocation.js";
+import { registerSetStatus } from "./callbacks/setStatus.js";
+import { registerSkipCallback } from "./callbacks/skip.js";
+import { registerStatusAvailable} from "./callbacks/statusAvailable.js";
+import { registerStatusBusy } from "./callbacks/statusBusy.js";
 
-import { registerTextRegistration } from "./handlers/textRegistration.js";
+
+// === Commands ===
+import { registerAdminDrivers } from "./commands/adminDrivers.js";
+import { registerAdminLoadDetails } from "./commands/adminLoadDetails.js";
+import { registerAdminLoads } from "./commands/adminLoads.js";
+import { registerLocationCommand } from "./commands/location.js";
+import { registerMenu} from "./commands/menu.js";
+import { registerMyLoads } from "./commands/myLoads.js";
+import { registerProfile } from "./commands/profile.js";
+import { registerStart } from "./commands/start.js";
+import { registerStatusCommand } from "./commands/status.js";
+
+
+// === Handlers ===
 import { registerLocationHandler } from "./handlers/location.js";
 import { registerTextBidding } from "./handlers/textBidding.js";
+import { registerTextRegistration } from "./handlers/textRegistration.js";
 
-// — Call this once at startup
-export function registerAllBotHandlers() {
-  // Commands
-  registerStart(bot);
-  registerMenu(bot);
-  registerAdminLoads(bot);
-  registerAdminLoadDetails(bot);
-  registerAdminDrivers(bot);
-  registerProfileCommand(bot);
-  registerStatusCommand(bot);
-  registerLocationCommand(bot);
-  registerMyLoadsCommand(bot);
+// === Initialize bot ===
+export function initBot(bot: Bot) {
 
-  // Callbacks
-  registerGetStarted(bot);
+  // === Callbacks ===
   registerAgree(bot);
-  registerSetLocation(bot);
-  registerSetStatus(bot);
-  registerStatusAvailable(bot);
-  registerStatusBusy(bot);
+  registerGetStarted(bot);
   registerHelp(bot);
   registerLoads(bot);
   registerMainMenu(bot);
-  registerRateCallbacks(bot);
+  registerRateCallback(bot);
+  registerSetLocation(bot);
+  registerSetStatus(bot);
+  registerSkipCallback(bot);
+  registerStatusAvailable(bot);
+  registerStatusBusy(bot);
 
-  // Handlers
-  registerTextRegistration(bot);
+  // === Commands ===
+  registerAdminDrivers(bot);
+  registerAdminLoadDetails(bot);
+  registerAdminLoads(bot);
+  registerLocationCommand(bot);
+  registerMenu(bot);
+  registerMyLoads(bot);
+  registerProfile(bot);
+  registerStart(bot);
+  registerStatusCommand(bot);
+
+  // === Handlers ===
   registerLocationHandler(bot);
   registerTextBidding(bot);
+  registerTextRegistration(bot);
+
 }

@@ -109,7 +109,7 @@ export class HistoryProcessor {
       if (!parsed) continue;
 
       try {
-        await handleParsedEmail(this.mailboxId, messageId, parsed);
+        await handleParsedEmail(messageId, parsed);
         await this.storage.markMessageProcessed(messageId);
       } catch (err) {
         logger.error(`Failed to handle parsed email ${messageId}:`, err);
@@ -139,7 +139,7 @@ export class HistoryProcessor {
       if (!parsed) continue;
 
       try {
-        await handleParsedEmail(this.mailboxId, id, parsed);
+        await handleParsedEmail(id, parsed);
         await this.storage.markMessageProcessed(id);
       } catch (err) {
         logger.error("Failed to handle recent message", id, err);

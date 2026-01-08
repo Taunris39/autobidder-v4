@@ -10,7 +10,6 @@ import {
 } from "../state.js";
 
 export function registerLocationCommand(bot: Bot) {
-  // Команда для запроса обновления локации
   bot.command("location", async (ctx: Context) => {
     const userId = ctx.from?.id;
     if (!userId) return;
@@ -20,7 +19,6 @@ export function registerLocationCommand(bot: Bot) {
     await ctx.reply("Отправьте вашу геолокацию.");
   });
 
-  // Обработка сообщения с геолокацией
   bot.on("message:location", async (ctx: Context) => {
     const userId = ctx.from?.id;
     if (!userId) return;
@@ -34,7 +32,10 @@ export function registerLocationCommand(bot: Bot) {
       return;
     }
 
-    const { latitude, longitude } = ctx.message.location;
+    const location = ctx.message?.location;
+    if (!location) return;
+
+    const { latitude, longitude } = location;
 
     setUserData(userId, {
       location: { lat: latitude, lon: longitude },

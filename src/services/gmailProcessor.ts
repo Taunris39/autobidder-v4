@@ -1,7 +1,7 @@
 // src/services/gmailProcessor.ts
 
 import { saveLoad } from "./loadService.js";
-import { Load } from "../types.js";
+import type { Load } from "../types/types.js";
 
 export async function processEmail(parsed: {
   id: string;

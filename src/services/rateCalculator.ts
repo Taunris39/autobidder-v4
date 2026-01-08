@@ -1,30 +1,21 @@
 // === src/services/rateCalculator.ts ===
 
-import { extractRateFromEmail } from "./extractRate.js";
+// src/services/rateCalculator.ts
 
-interface LoadLike {
-    rawText: string;
-    // miles?: number;
-    // truckType?: "sprinter" | "small_straight" | "large_straight";
-}
+import type { UserData } from "../bot/state.js";
 
-interface DriverLike {
-    truckType?: "sprinter" | "small_straight" | "large_straight";
-}
+/**
+ * DriverLike должен принимать структуру UserData
+ * или любой другой объект с произвольными полями.
+ */
+export type DriverLike = UserData | Record<string, unknown>;
 
-export function calculateSuggestedRate(
-    load: LoadLike,
-    driver: DriverLike
-): number | null {
-    const extracted = extractRateFromEmail(load.rawText);
-    if (extracted) return extracted;
-
-    // TODO: позже добавить формулы по типу трака
-    switch (driver.truckType) {
-        case "sprinter":
-        case "small_straight":
-        case "large_straight":
-        default:
-            return null;
-    }
+/**
+ * Пример функции расчёта — оставь свою логику,
+ * но сигнатура теперь принимает DriverLike.
+ */
+export function calculateSuggestedRate(load: any): number {
+    // простая заглушка — подставь свою формулу
+    const base = typeof load.miles === "number" ? load.miles * 1.2 : 100;
+    return Math.round(base);
 }

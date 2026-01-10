@@ -4,14 +4,18 @@ import {Bot, Context} from "grammy";
 import {setUserData, getUserState, setUserState} from "../state.js";
 
 export function registerTextRegistration(bot: Bot) {
+    console.log("textRegistration loaded");
     bot.on("message:text", async (ctx: Context) => {
-        const userId = ctx.from?.id;
-        if (!userId) return;
+
+        const rawId = ctx.from?.id;
+        if (!rawId) return;
+        const userId = String(rawId);
 
         const text = ctx.message?.text?.trim();
         if (!text) return;
 
         const state = getUserState(userId);
+        console.log("textRegistration triggered", getUserState(String(ctx.from.id)));
 
         if (state === "awaiting_name") {
             setUserData(userId, {userId, name: text});

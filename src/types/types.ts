@@ -1,7 +1,7 @@
 // src/types/types.ts
 
 export interface Quote {
-  driverId: number;
+  driverId: string;
   price: number;
 }
 

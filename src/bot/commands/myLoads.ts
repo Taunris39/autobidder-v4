@@ -6,8 +6,10 @@ import type { Quote } from "../../types/types.js";
 
 export function registerMyLoads(bot: Bot) {
   bot.command("my_loads", async (ctx: Context) => {
-    const userId = ctx.from?.id;
-    if (!userId) return;
+
+      const rawId = ctx.from?.id;
+      if (!rawId) return;
+      const userId = String(rawId);
 
     const loads = getAllLoads().filter((l) =>
         l.quotes.some((q: Quote) => q.driverId === userId)

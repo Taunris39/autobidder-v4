@@ -6,9 +6,10 @@ import { getUserData } from "./state.js";
 export async function notifyAdminAboutQuote(
   bot: Bot,
   loadId: string,
-  driverId: number,
+  driverId: string,
   price: number,
 ) {
+
   const driver = getUserData(driverId);
   const driverName = driver?.name ?? `Водитель ${driverId}`;
 

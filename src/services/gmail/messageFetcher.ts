@@ -2,38 +2,12 @@
 // — Fetch Gmail messages by ID and parse them.
 
 import { google } from "googleapis";
-import type { ParsedEmail } from "./types.js";
-import { parseRawEmail } from "./parser.js";
-import { loadEnv } from "../../config/env.js";
+import type {ParsedEmail} from "./types.js";
+import {parseRawEmail} from "./parser.js";
 import { logger } from "../../utils/logger.js";
+import { createOAuth2Client } from "./oauth.js";
 
-const env = loadEnv();
 
-function createOAuth2Client() {
-  const {
-    GMAIL_CLIENT_ID,
-    GMAIL_CLIENT_SECRET,
-    GMAIL_REDIRECT_URI,
-    GMAIL_REFRESH_TOKEN,
-  } = env;
-  if (!GMAIL_CLIENT_ID || !GMAIL_CLIENT_SECRET || !GMAIL_REDIRECT_URI) {
-    throw new Error(
-      "GMAIL_CLIENT_ID, GMAIL_CLIENT_SECRET, GMAIL_REDIRECT_URI must be set"
-    );
-  }
-  const client = new google.auth.OAuth2(
-    GMAIL_CLIENT_ID,
-    GMAIL_CLIENT_SECRET,
-    GMAIL_REDIRECT_URI
-  );
-  if (!GMAIL_REFRESH_TOKEN) {
-    throw new Error(
-      "GMAIL_REFRESH_TOKEN is not set; run OAuth flow to obtain it"
-    );
-  }
-  client.setCredentials({ refresh_token: GMAIL_REFRESH_TOKEN });
-  return client;
-}
 
 const auth = createOAuth2Client();
 const gmail = google.gmail({ version: "v1", auth });
@@ -54,8 +28,7 @@ export async function fetchAndParseMessage(
       return null;
     }
 
-    const parsed = await parseRawEmail(raw);
-    return parsed;
+    return await parseRawEmail(raw);
   } catch (err) {
     logger.error(`Failed to fetch message ${messageId}:`, err);
     return null;

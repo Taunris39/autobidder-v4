@@ -11,8 +11,9 @@ export function registerSetLocation(bot: Bot) {
       await ctx.deleteMessage();
     } catch {}
 
-    const userId = ctx.from?.id;
-    if (!userId) return;
+    const rawId = ctx.from?.id;
+    if (!rawId) return;
+    const userId = String(rawId);
 
     setUserState(userId, "awaiting_location");
 

@@ -6,8 +6,10 @@ import { getLoad, saveLoad } from "../../services/loadService.js";
 
 export function registerTextBidding(bot: Bot) {
   bot.on("message:text", async (ctx: Context) => {
-    const userId = ctx.from?.id;
-    if (!userId) return;
+
+    const rawId = ctx.from?.id;
+    if (!rawId) return;
+    const userId = String(rawId);
 
     const userData = getUserData(userId);
     if (!userData) return;

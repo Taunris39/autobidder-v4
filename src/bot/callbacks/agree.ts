@@ -15,8 +15,9 @@ export function registerAgree(bot: Bot) {
       console.warn("deleteMessage failed:", err);
     }
 
-    const userId = ctx.from?.id;
-    if (!userId) return;
+    const rawId = ctx.from?.id;
+    if (!rawId) return;
+    const userId = String(rawId); // всегда строка
 
     setUserState(userId, "awaiting_name");
     setUserData(userId, {}); // initialize profile

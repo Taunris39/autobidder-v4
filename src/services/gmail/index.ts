@@ -17,12 +17,6 @@ const ALLOWED_VEHICLE_TYPES = (env.ALLOWED_VEHICLE_TYPES ?? "Large Straight,Carg
   .filter(Boolean);
 */
 
-/**
- * Обработчик разобранного письма.
- * - извлекает структурированные данные
- * - фильтрует по vehicleType
- * - формирует Markdown‑сообщение и отправляет боту
- */
 export async function handleParsedEmail(
   messageId: string,
   email: ParsedEmail

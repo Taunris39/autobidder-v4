@@ -5,37 +5,10 @@ import { google } from "googleapis";
 import pRetry from "p-retry";
 import type { IGmailStorage } from "./storage.js";
 import { fetchAndParseMessage } from "./messageFetcher.js";
-import { loadEnv } from "../../config/env.js";
 import { logger } from "../../utils/logger.js";
 import { handleParsedEmail } from "./index.js";
+import { createOAuth2Client } from "./oauth.js";
 
-const env = loadEnv();
-
-function createOAuth2Client() {
-  const {
-    GMAIL_CLIENT_ID,
-    GMAIL_CLIENT_SECRET,
-    GMAIL_REDIRECT_URI,
-    GMAIL_REFRESH_TOKEN,
-  } = env;
-  if (!GMAIL_CLIENT_ID || !GMAIL_CLIENT_SECRET || !GMAIL_REDIRECT_URI) {
-    throw new Error(
-      "GMAIL_CLIENT_ID, GMAIL_CLIENT_SECRET, GMAIL_REDIRECT_URI must be set"
-    );
-  }
-  const client = new google.auth.OAuth2(
-    GMAIL_CLIENT_ID,
-    GMAIL_CLIENT_SECRET,
-    GMAIL_REDIRECT_URI
-  );
-  if (!GMAIL_REFRESH_TOKEN) {
-    throw new Error(
-      "GMAIL_REFRESH_TOKEN is not set; run OAuth flow to obtain it"
-    );
-  }
-  client.setCredentials({ refresh_token: GMAIL_REFRESH_TOKEN });
-  return client;
-}
 
 const auth = createOAuth2Client();
 const gmail = google.gmail({ version: "v1", auth });
@@ -48,7 +21,7 @@ export class HistoryProcessor {
 
   async handleHistoryId(incomingHistoryId?: string) {
     const lastHistoryId = await this.storage.getLastHistoryId(this.mailboxId);
-    let startHistoryId = lastHistoryId ?? incomingHistoryId ?? null;
+    const startHistoryId = lastHistoryId ?? incomingHistoryId ?? null;
 
     if (!startHistoryId) {
       logger.info("No startHistoryId; falling back to recent messages");

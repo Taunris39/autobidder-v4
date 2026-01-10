@@ -5,8 +5,10 @@ import { getUserData } from "../state.js";
 
 export function registerProfile(bot: Bot) {
   bot.command("profile", async (ctx: Context) => {
-    const userId = ctx.from?.id;
-    if (!userId) return;
+
+    const rawId = ctx.from?.id;
+    if (!rawId) return;
+    const userId = String(rawId);
 
     const user = getUserData(userId);
     if (!user) {

@@ -11,8 +11,10 @@ import {
 
 export function registerLocationCommand(bot: Bot) {
   bot.command("location", async (ctx: Context) => {
-    const userId = ctx.from?.id;
-    if (!userId) return;
+
+    const rawId = ctx.from?.id;
+    if (!rawId) return;
+    const userId = String(rawId);
 
     setUserState(userId, "awaiting_location_update");
 
@@ -20,8 +22,10 @@ export function registerLocationCommand(bot: Bot) {
   });
 
   bot.on("message:location", async (ctx: Context) => {
-    const userId = ctx.from?.id;
-    if (!userId) return;
+
+    const rawId = ctx.from?.id;
+    if (!rawId) return;
+    const userId = String(rawId);
 
     const state = getUserState(userId);
     if (state !== "awaiting_location_update") return;

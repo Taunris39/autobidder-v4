@@ -12,8 +12,9 @@ export function registerStatusBusy(bot: Bot) {
       await ctx.deleteMessage();
     } catch {}
 
-    const userId = ctx.from?.id;
-    if (!userId) return;
+    const rawId = ctx.from?.id;
+    if (!rawId) return;
+    const userId = String(rawId);
 
     setUserData(userId, { status: "busy" });
     clearUserState(userId);

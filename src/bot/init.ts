@@ -43,7 +43,6 @@ import {registerStatusCommand} from "./commands/status.js";
 
 
 // === Handlers ===
-import {registerLocationHandler} from "./handlers/location.js";
 import {registerTextBidding} from "./handlers/textBidding.js";
 import {registerTextRegistration} from "./handlers/textRegistration.js";
 
@@ -75,8 +74,8 @@ export function initBot(bot: Bot) {
     registerStatusCommand(bot);
 
     // === Handlers ===
-    registerLocationHandler(bot);
-    registerTextBidding(bot);
     registerTextRegistration(bot);
+    registerLocationCommand(bot);
+    registerTextBidding(bot);
 
 }

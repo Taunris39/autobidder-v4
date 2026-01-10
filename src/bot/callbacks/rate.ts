@@ -6,8 +6,10 @@ import { getLoad } from "../../services/loadService.js";
 
 export function registerRateCallback(bot: Bot) {
   bot.callbackQuery("rate", async (ctx: Context) => {
-    const userId = ctx.from?.id;
-    if (!userId) return;
+
+    const rawId = ctx.from?.id;
+    if (!rawId) return;
+    const userId = String(rawId);
 
     const userData = getUserData(userId);
     if (!userData) {

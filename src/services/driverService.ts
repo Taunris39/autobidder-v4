@@ -2,9 +2,10 @@
 
 import { getAllUserData } from "../bot/state.js";
 import type { UserLocation } from "../bot/state.js";
+import { haversineDistance } from "./distance.js"; // убедись в корректном пути
 
 export interface DriverInfo {
-    userId: number;
+    userId: string;
     name?: string | undefined;
     location: UserLocation;
 }
@@ -26,15 +27,11 @@ export function sortDriversByDistance(
     return drivers
         .map((d) => ({
             ...d,
-            distance: Math.sqrt(
-                Math.pow(d.location.lat - loadLocation.lat, 2) +
-                Math.pow(d.location.lon - loadLocation.lon, 2)
+            distance: haversineDistance(
+                { lat: d.location.lat, lon: d.location.lon },
+                { lat: loadLocation.lat, lon: loadLocation.lon }
             ),
         }))
         .sort((a, b) => a.distance - b.distance)
-        .map((d) => ({
-            userId: d.userId,
-            name: d.name,
-            location: d.location,
-        }));
+        .map(({ distance, ...rest }) => rest);
 }

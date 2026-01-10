@@ -19,7 +19,7 @@ async function main() {
   logger.info("Gmail worker started");
 }
 
-main().catch((err) => {
+  main().catch((err) => {
   logger.error("Gmail worker failed:", err);
   process.exit(1);
 });

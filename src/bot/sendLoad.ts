@@ -7,7 +7,7 @@ import type { Load } from "../types/types.js";
 
 export async function sendLoadToDriver(
     bot: Bot,
-    driverId: number,
+    driverId: string,
     load: Load
 ) {
   const driver = getUserData(driverId);
